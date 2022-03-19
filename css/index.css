@@ -38,9 +38,9 @@
      :root {
      /* font-sizes */
      --fs-800: 6.25rem;
-     --fs-700: 3.5rem;
-     --fs-500: 1.75rem;
+     --fs-700: 3rem;
      --fs-600: 2rem;
+     --fs-500: 1.75rem;
      --fs-400: 1.125rem;
      }
 }
@@ -184,24 +184,6 @@ ul {
 
 @media (min-width: 45em) {
 
-     .grid-container {
-          text-align: left;
-          grid-template-columns: minmax(2em, 1fr) repeat(2, minmax(0, 40rem)) minmax(2rem, 1fr);
-          column-gap: var(--container-gap, 2rem);
-     }
-     
-     .grid-container > *:first-child {
-          grid-column: 2;
-     }
-     
-     .grid-container > *:last-child {
-          grid-column: 3;
-     }
-
-     .home .grid-container {
-          padding-bottom: max(6rem, 15vh);
-          align-items: end;
-     }
 }
 
 
@@ -479,18 +461,18 @@ ul {
 }
 
 .number-indicators {
-     flex-direction: column;
-     align-items: baseline;
+     align-items: center;
+     aspect-ratio: 1;
 }
 
 .number-indicators * {
      padding: 1rem;
-     aspect-ratio: 1;
      border: 1px solid hsl( var(--clr-white) / .25);
      border-radius: 50%;
      cursor: pointer;
      background: none;
      color: hsl( var(--clr-white) / 1);
+     aspect-ratio: 1;
 }
 
 .number-indicators > *:hover,
@@ -520,11 +502,36 @@ body {
      background-image: url(../assets/home/background-home-mobile.jpg);
 }
 
+.destination {
+     background-image: url(../assets/destination/background-destination-mobile.jpg);
+}
+
+.crew {
+     background-image: url(../assets/crew/background-crew-mobile.jpg);
+}
+
+.technology {
+     background-image: url(../assets/technology/background-technology-mobile.jpg);
+}
+
+
 @media (min-width: 35rem) {
+
+     .home, .destination, .crew, .technology {
+          background-position: center center;
+     }
+
      .home {
-     background-image: url(../assets/home/background-home-tablet.jpg);
-     
-     background-position: center center;
+          background-image: url(../assets/home/background-home-tablet.jpg);
+     }
+     .destination {
+          background-image: url(../assets/destination/background-destination-tablet.jpg);
+     }
+     .crew {
+          background-image: url(../assets/crew/background-crew-tablet.jpg);
+     }
+     .technology {
+          background-image: url(../assets/technology/background-technology-tablet.jpg);
      }
 }
 
@@ -532,43 +539,18 @@ body {
      .home {
      background-image: url(../assets/home/background-home-desktop.jpg);
      }
-}
-
-.destination {
-     background-image: url(../assets/destination/background-destination-mobile.jpg);
-}
-
-@media (min-width: 35rem) {
      .destination {
-     background-image: url(../assets/destination/background-destination-tablet.jpg);
-     
-     background-position: center center;
+          background-image: url(../assets/destination/background-destination-desktop.jpg);
      }
-}
-
-@media (min-width: 45rem) {
-     .destination {
-     background-image: url(../assets/destination/background-destination-desktop.jpg);
-     }
-}
-
-.crew {
-     background-image: url(../assets/crew/background-crew-mobile.jpg);
-}
-
-@media (min-width: 35rem) {
-     .crew {
-     background-image: url(../assets/crew/background-crew-tablet.jpg);
-     
-     background-position: center center;
-     }
-}
-
-@media (min-width: 45rem) {
      .crew {
      background-image: url(../assets/crew/background-crew-desktop.jpg);
      }
+     .technology {
+          background-image: url(../assets/technology/background-technology-desktop.jpg);
+     }
 }
+
+
 
 
 
@@ -607,6 +589,7 @@ body {
 .grid-container--destination > picture {
      max-width: 60%;
      grid-area: picture;
+     align-self: center;
 }
 
 .grid-container--destination > .tab-list {
@@ -658,11 +641,43 @@ picture[hidden] {
      color: hsl( var(--clr-white) / .5);
 }
 
+/* technology layout */
+
+.grid-container--technology {
+     --flow-space: 2rem;
+     grid-template-areas: 
+          "title"
+          "picture"
+          "tabs"
+          "content"
+     ;
+}
+
+.grid-container--technology > picture {
+     grid-area: picture;
+     width: 100%;
+}
+
+.grid-container--technology > .number-indicators {
+     grid-area: tabs;
+}
+
+.grid-container--technology > .technology-info {
+     grid-area: content;
+}
+
+.technology-img-desktop {
+     display: none;
+}
 
 @media (min-width: 35em) {
      .numbered-title {
           justify-self: start;
           margin-block-start: 2rem;
+     }
+
+     .grid-container--technology > .numbered-title {
+          justify-self: center;
      }
 
      .destination-meta {
@@ -680,10 +695,18 @@ picture[hidden] {
           ;
           padding-bottom: 0;
      }
+
+     .grid-container--crew > picture {
+          align-self: end;
+     }
 }
 
 
 @media (min-width: 45em) {
+
+     .number-indicators {
+          flex-direction: column;
+     }
 
      .grid-container {
           text-align: left;
@@ -726,14 +749,45 @@ picture[hidden] {
      }
 
      .grid-container--crew {
+          grid-template-columns: minmax(2em, 1fr) minmax(0, 45rem) minmax(0, 30rem) minmax(2rem, 1fr);
           justify-items: start;
           align-items: flex-start;
           grid-template-areas:    
-               ". title title ."
+               ". title picture ."
                ". content picture ."
                ". tabs picture ."
-               ". . picture ."
+               /* ". . picture ." */
           ;
           
+     }
+
+     .grid-container--technology > .numbered-title {
+          justify-self: start;
+     }
+
+     .grid-container--technology picture img:first-child {
+          display: none;
+     }
+
+     .grid-container--technology {
+          grid-template-columns: minmax(2em, 1fr) minmax(5rem, 1fr) repeat(2, minmax(0, 35rem));
+          column-gap: var(--container-gap, 2rem);
+          justify-items: start;
+          align-items: flex-start;
+          grid-template-areas: 
+               ". title title ."
+               ". tabs content picture"
+               ". tabs content picture"
+               ". tabs content picture"
+          ;
+          align-items: center;
+     }
+
+     .technology-img-mobile {
+          display: none;
+     }
+
+     .technology-img-desktop {
+          display: block;
      }
 }
